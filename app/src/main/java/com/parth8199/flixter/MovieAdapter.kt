@@ -1,6 +1,7 @@
 package com.parth8199.flixter
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 
 private const val TAG = "MovieAdapter"
 class MovieAdapter(private val context: Context, private val movies: List<Movie>) :
+
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
 
@@ -30,13 +32,19 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
     override fun getItemCount() = movies.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val orientation = context.resources.configuration.orientation
         private val tvTitle=itemView.findViewById<TextView>(R.id.tvTitle)
         private val tvOverview=itemView.findViewById<TextView>(R.id.tvOverview)
         private val ivPoster=itemView.findViewById<ImageView>(R.id.ivPoster)
         fun bind (movie : Movie ){
             tvTitle.text=movie.title
             tvOverview.text=movie.overview
-            Glide.with(context).load(movie.posterImageUlr).into(ivPoster)
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                Glide.with(context).load(movie.posterImageUlr).into(ivPoster)
+            } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Glide.with(context).load(movie.backdropImageUrl).into(ivPoster)
+            }
+
         }
     }
 }
