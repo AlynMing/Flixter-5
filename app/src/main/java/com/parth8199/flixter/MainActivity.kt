@@ -16,15 +16,15 @@ private const val NOW_PLAYING_URL =
 
 class MainActivity : AppCompatActivity() {
     private val movies = mutableListOf<Movie>()
-    private lateinit var rvMovies : RecyclerView
+    private lateinit var rvMovies: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         rvMovies = findViewById(R.id.rvMovies)
-        val movieAdapter = MovieAdapter(this,movies)
+        val movieAdapter = MovieAdapter(this, movies)
         rvMovies.adapter = movieAdapter
-        rvMovies.layoutManager= LinearLayoutManager(this)
+        rvMovies.layoutManager = LinearLayoutManager(this)
 
         val client = AsyncHttpClient()
         client.get(NOW_PLAYING_URL, object : JsonHttpResponseHandler() {
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     movies.addAll(Movie.fromJsonArray(movieJsonArray))
                     movieAdapter.notifyDataSetChanged()
                     Log.i(TAG, "Movie List $movies")
-                }catch (e:JSONException){
+                } catch (e: JSONException) {
                     Log.e(TAG, "Exception Encountered $e")
                 }
             }
