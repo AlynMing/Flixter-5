@@ -20,6 +20,9 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
 
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.i(TAG, "onCreateViewHolder")
@@ -41,15 +44,27 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
         private val tvOverview = itemView.findViewById<TextView>(R.id.tvOverview)
         private val ivPoster = itemView.findViewById<ImageView>(R.id.ivPoster)
         fun bind(movie: Movie) {
+
             tvTitle.text = movie.title
             tvOverview.text = movie.overview
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            val imageUrl = if (orientation == Configuration.ORIENTATION_LANDSCAPE) movie.backdropImageUrl
+            else movie.posterImageUrl
+            Glide.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                // DO NOT alter the viewport size to match the placeholder, keep it the same
+                .dontTransform()
+                .error(R.drawable.errorimage)
+                .dontTransform()
+                .into(ivPoster)
+            /*if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 // Glide.with(context).load(movie.posterImageUlr).into(ivPoster)
                 Glide.with(context)
                     .load(movie.posterImageUlr)
                     .placeholder(R.drawable.placeholder)
                     .dontTransform()
                     .error(R.drawable.errorimage)
+                    .dontTransform()
                     .into(ivPoster)
             } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 //  Glide.with(context).load(movie.backdropImageUrl).into(ivPoster)
@@ -58,8 +73,9 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
                     .placeholder(R.drawable.placeholder)
                     .dontTransform()
                     .error(R.drawable.errorimage)
+                    .dontTransform()
                     .into(ivPoster)
-            }
+            }*/
 
         }
     }
