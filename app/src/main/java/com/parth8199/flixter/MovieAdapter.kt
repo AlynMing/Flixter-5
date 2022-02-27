@@ -69,7 +69,6 @@ class MovieAdapter(private val context: Context, private val movies: List<Movie>
         override fun onClick(p0: View?) {
             val movie = movies[adapterPosition]
             val intent = Intent(context, DetailActivity::class.java)
-            Toast()
             intent.putExtra(MOVIE_EXTRA, movie)
             context.startActivity(intent)
         }
