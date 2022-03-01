@@ -22,7 +22,7 @@
 <img src="walkthrough2.gif" width=250><br>
 
 ### Notes
-None
+The glitches in ratingbar aren't actually present. It's a gif rendering issue.
 
 ## Open-source libraries used
 - [Android Async HTTP](https://github.com/codepath/CPAsyncHttpClient) - Simple asynchronous HTTP requests with JSON parsing
